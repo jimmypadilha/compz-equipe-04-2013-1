@@ -28,6 +28,5 @@ int main(void) {
 
 	printf("}");
 
-
 	return EXIT_SUCCESS;
 }
