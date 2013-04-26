@@ -13,11 +13,12 @@
 
 int main(void) {
 	int n = 0;
-	int i;
+	int i, j;
 
 	printf("Informe o valor n da partição: ");
 	scanf("%d", &n);
-	printf("{");
+
+	printf("A = {");
 
 	for (i = 1; i <= n; i++) {
 		if (i < n)
@@ -27,6 +28,32 @@ int main(void) {
 	}
 
 	printf("}");
+
+	printf("\nP(A)={");
+
+	/* Imprime os numeros sozinhos */
+	for (i = 1; i <= n; i++) {
+		printf("{%d}, ", i);
+	}
+
+	/* Imprime os pares de numeros */
+	for (i = 1; i <= n; i++) {
+		for (j = i+1; j <= n; j++) {
+			printf("{%d, %d}, ", i, j);
+		}
+	}
+
+	printf("{");
+
+	/* Imprime todos os numeros juntos */
+	for (i = 1; i <= n; i++) {
+		if (i < n)
+			printf("%d, ", i);
+		else
+			printf("%d", i);
+	}
+
+	printf("}}");
 
 	return EXIT_SUCCESS;
 }
