@@ -11,10 +11,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAX 5
+
 int main(void) {
 
+	int i;
+	//int vetor[MAX];
+
 	/* Tabela hash */
-	int vetor[5] = {17, 42, 9, 33, 12};
+	int vetor[MAX] = {17, 42, 9, 33, 12};
+
+	/* Gera número aleatório */
+	/*
+	for (i = 0; i < MAX; i++) {
+		vetor[i] = rand();
+	}
+	*/
+
+	/* Imprime números gerados */
+	/*
+	printf("Números gerados:\n[");
+	for (i = 0; i < MAX; i++){
+		printf("%d ", vetor[i]);
+	}
+	printf("]\n");
+	*/
 
 	/* Cálculo da chave */
 	int valor = 580625685 % 701;
