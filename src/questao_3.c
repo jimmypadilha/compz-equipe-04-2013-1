@@ -21,7 +21,7 @@ int main(void) {
 	int tabela_hash[MAX];
 	int valor_hash;
 
-	/* Tabela hash */
+	/* Vetor de números */
 	int vetor[MAX] = {17, 42, 9, 33, 12};
 
 	/* Gera número aleatório */
@@ -50,22 +50,27 @@ int main(void) {
 	/* Inserindo um novo registro */
 	for (i = 0; i < MAX; i++) {
 		valor_hash = (vetor[i] % 701) + 1;
+		//printf("%d", valor_hash); 18 43 10 34 13
+		//printf("\n");
 		tabela_hash[valor_hash] = vetor[i];
 	}
 
 	/* Imprime números gerados */
-
 	printf("Tabela hash:\n[");
-	for (i = 0; i < MAX; i++){
-		printf("%d ", tabela_hash[i]);
+	for (i = 0; i < 50; i++){
+		if (tabela_hash[i] != "")
+			printf("%d ", tabela_hash[i]);
 	}
 	printf("]\n");
 
 	/* Procurando uma chave */
-	if (chave_procurada == vetor[valor_hash])
-		printf("\nNúmero encontrado");
-	else
-		printf("\nNúmero não encontrado");
+	valor_hash = (chave_procurada % 701) + 1;
+	for (i = valor_hash;  i < MAX; i++) {
+		if (chave_procurada == tabela_hash[i])
+			printf("\nNúmero encontrado");
+		else
+			printf("\nNúmero não encontrado");
+	}
 
 
 	return EXIT_SUCCESS;
