@@ -28,6 +28,7 @@ void imprimir_conjunto(int n){
 	printf("}");
 }
 
+
 void particao(int n){
 
 	int i, j;
@@ -44,7 +45,6 @@ void particao(int n){
 		}
 	}
 	printf("{");
-
 
 	for (i = 1; i <= n; i++) {
 		if (i < n)
@@ -63,16 +63,15 @@ int main(void) {
 	printf("Informe o valor n da partição: ");
 	scanf("%d", &n);
 
-	printf("A = {");
+	imprimir_conjunto(n);
+	particao(n);
 
-	for (i = 1; i <= n; i++) {
-		if (i < n)
-			printf("%d, ", i);
-		else
-			printf("%d", i);
-	}
+	return EXIT_SUCCESS;
+}
 
-	printf("}");
+
+
+
 
 
 
