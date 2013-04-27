@@ -22,13 +22,19 @@ void iniciar_tabela(int *tabela_hash){
 }
 
 void inserir_numero(int *vetor, int *tabela_hash){
-	int i, valor_hash = 0;
+	int i, j, valor_hash = 0;
 	for (i = 0; i < MAX; i++) {
-		valor_hash = vetor[i] % M;
-		if (valor_hash < MAX){
+		valor_hash = vetor[i] % MAX;
+		if (tabela_hash[valor_hash] == NULL)
 			tabela_hash[valor_hash] = vetor[i];
+		else{
+			for (j = 0; j < MAX; j++){
+				if (tabela_hash[j] == NULL){
+					tabela_hash[j] = vetor[i];
+					break;
+				}
+			}
 		}
-
 	}
 }
 
@@ -43,7 +49,7 @@ void imprimir_tabela(int *vetor){
 
 void procurar_valor(int chave_procurada, int *tabela_hash){
 	int i;
-	int posicao = chave_procurada % M;
+	int posicao = chave_procurada % MAX;
 
 	if (chave_procurada == tabela_hash[posicao]){
 		printf("\nNúmero encontrado");
