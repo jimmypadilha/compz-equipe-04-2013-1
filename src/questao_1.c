@@ -11,6 +11,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+//teste de alteracao
+
 int main(void) {
 	int n = 0;
 	int i, j;
