@@ -28,6 +28,33 @@ void imprimir_conjunto(int n){
 	printf("}");
 }
 
+void particao(int n){
+
+	int i, j;
+
+	printf("\nP(A)={");
+
+	for (i = 1; i <= n; i++) {
+		printf("{%d}, ", i);
+	}
+
+	for (i = 1; i <= n; i++) {
+		for (j = i+1; j <= n; j++) {
+			printf("{%d, %d}, ", i, j);
+		}
+	}
+	printf("{");
+
+
+	for (i = 1; i <= n; i++) {
+		if (i < n)
+			printf("%d, ", i);
+		else
+			printf("%d", i);
+	}
+	printf("}}");
+}
+
 
 int main(void) {
 	int n = 0;
@@ -47,25 +74,6 @@ int main(void) {
 
 	printf("}");
 
-	printf("\nP(A)={");
-
-	/* Imprime os numeros sozinhos */
-
-
-	/* Imprime os pares de numeros */
 
 
 
-
-	/* Imprime todos os numeros juntos */
-	for (i = 1; i <= n; i++) {
-		if (i < n)
-			printf("%d, ", i);
-		else
-			printf("%d", i);
-	}
-
-	printf("}}");
-
-	return EXIT_SUCCESS;
-}*/
