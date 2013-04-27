@@ -12,7 +12,22 @@
 #include <stdlib.h>
 
 
-//teste de alteracao
+void imprimir_conjunto(int n){
+
+	int i;
+
+	printf("A = {");
+
+	for (i = 1; i <= n; i++) {
+		if (i < n)
+			printf("%d, ", i);
+		else
+			printf("%d", i);
+	}
+
+	printf("}");
+}
+
 
 int main(void) {
 	int n = 0;
@@ -59,4 +74,4 @@ int main(void) {
 	printf("}}");
 
 	return EXIT_SUCCESS;
-}
+}*/
