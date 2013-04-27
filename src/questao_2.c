@@ -11,22 +11,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
+int main(int argc, char *argv[]) {
 
-	FILE *fp;
-	size_t tamanho = 100;
-	char *linha = malloc(tamanho);
-	fp = fopen ("teste.txt", "r");
-	if (fp == NULL) {
+	FILE *entrada, *saida;
+	size_t len = 100;
+	char *linha = malloc(len);
+	entrada = fopen (argv[1], "r");
+	saida = fopen(argv[2],"w");
+	if (entrada == NULL) {
 		printf ("Houve um erro ao abrir o arquivo.\n");
 		return 1;
 	} else{
-		while (getline(&linha, &len, fp) > 0)
+		while (getline(&linha, &len, entrada) > 0)
 		{
-			printf("%s", linha);
+			fprintf(saida, "%s", linha);
 		}
 		if (linha) free(linha);
-		fclose (fp);
+		fclose (entrada);
+		fclose(saida);
 		return 0;
 	}
 }
