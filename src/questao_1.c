@@ -28,6 +28,7 @@ void imprimir_conjunto(int n){
 	printf("}");
 }
 
+
 void particao(int n){
 
 	int i, j;
@@ -44,7 +45,6 @@ void particao(int n){
 		}
 	}
 	printf("{");
-
 
 	for (i = 1; i <= n; i++) {
 		if (i < n)
