@@ -52,7 +52,7 @@ void particao(int n){
 		else
 			printf("%d", i);
 	}
-	printf("}}");
+	printf("}}\n");
 }
 
 
