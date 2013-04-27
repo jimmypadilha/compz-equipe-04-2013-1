@@ -63,16 +63,15 @@ int main(void) {
 	printf("Informe o valor n da partição: ");
 	scanf("%d", &n);
 
-	printf("A = {");
+	imprimir_conjunto(n);
+	particao(n);
 
-	for (i = 1; i <= n; i++) {
-		if (i < n)
-			printf("%d, ", i);
-		else
-			printf("%d", i);
-	}
+	return EXIT_SUCCESS;
+}
 
-	printf("}");
+
+
+
 
 
 
