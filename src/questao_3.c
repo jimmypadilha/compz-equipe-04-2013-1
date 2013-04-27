@@ -57,7 +57,7 @@ void insereHash(Hash tabela, int numero){
 void buscaHash(Hash tabela, int numero){
 	int posicao = numero;
 	if(numero > tamanho || numero<0){
-		printf("Posicao nao encontrada");
+		printf("Posicao nao encontrada\n");
 		return;
 	}else{
 		imprimeColisao(tabela,posicao);
@@ -68,7 +68,7 @@ void buscaHash(Hash tabela, int numero){
 void imprimeColisao(Hash tabela,int posicao){
 	Dados* aux = tabela[posicao];
 	if(aux == NULL){
-		printf("posicao vazia");
+		printf("posicao vazia\n");
 		return;
 	}else{
 		if(aux != NULL){
@@ -138,14 +138,14 @@ int carregarArquivo(Hash tabela){
 			fscanf(arquivo,"%d",&elemento);
 			insereHash(tabela,elemento);
 		}
-		system("cls");
+		printf("\nNumeros Carregados na Tabela Hash\n");
 	}
 	fclose(arquivo);
 	return 1;
 }
 
-/*O procedimento numeroAleatorio gera 675 numeros no
- * intervalo 2000 >= X <= 8200 e os armazena no arquivo*/
+/*O procedimento numeroAleatorio gera 100000 numeros no
+ * intervalo 10000 >= X <= 100000 e os armazena no arquivo*/
 void numeroAleatorio(){
 
 	int cont = 0;
@@ -153,21 +153,21 @@ void numeroAleatorio(){
 	FILE* arquivo;
 	srand(time(NULL));
 
-	while(cont != 675){
-		numero = (rand()%6200)+2000;
+	while(cont != 100000){
+		numero = (rand()%90001)+10000;
 		escreverArquivo(arquivo,numero);
 		cont++;
 	}
 }
 
 void lerNumero(int *numero){
-	system("cls");
+	 printf("\n");
 	 printf("\nDigite a posicao do elemento que deseja verificar = ");
 	 scanf("%d",numero);
 }
 void lerNumero2(int *numero)
 {
- system("cls");
+ printf("\n");
  printf("Digite a posicao que desejar verificar = ");
  scanf("%d",numero);
 }
@@ -188,12 +188,11 @@ int main(void) {
 	int numero,elemento,op,cont = 0, conti = 0;
 	FILE* arquivo;
 
-	 while(numero != 8){
+	 while(numero != 7){
 		menuHash(&numero);
 		switch(numero){
 			case 1:
 				if(cont>0){
-					system("cls");
 					printf("numeros aleatorios ja gerados\n");
 				}else{
 					cont++;
@@ -206,12 +205,12 @@ int main(void) {
 					conti++;
 					carregarArquivo(tabela);
 
+
 				}else{
 					printf("");
 				}break;
 			case 3:
 				if(conti>0){
-					system("cls");
 					lerNumero(&elemento);
 					buscaHash(tabela,elemento);
 
@@ -220,21 +219,18 @@ int main(void) {
 				}break;
 			case 4:
 				if(conti>0){
-					system("cls");
 					imprimeHash(tabela);
 				}else{
 					printf("dsdsd");
 				}break;
 			case 5:
-				 system("cls");
 				    lerNumero2(&op);
 				    imprimeColisao(tabela,op);
 				    break;
 			case 6:
 				 exit(0);
 			default:
-				 system("cls");
-				 printf("\nOpcao invalida!\n");
+				printf("\nOpcao invalida!\n");
 				break;
 		}
 	}

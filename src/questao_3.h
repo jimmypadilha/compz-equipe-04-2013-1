@@ -8,7 +8,7 @@
 #ifndef QUESTAO_3_H_
 #define QUESTAO_3_H_
 
-#define tamanho 677  //tamanho da tabela hash
+#define tamanho 100000  //tamanho da tabela hash
 
 /* estrutura dados*/
 struct dados{
