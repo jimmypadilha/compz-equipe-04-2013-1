@@ -10,85 +10,237 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include "questao_3.h"
 
-#define MAX 5
-#define M 7
 
-void iniciar_tabela(int *tabela_hash){
+/*  recebe como parametro uma variavel inteira,
+ *  retorna o resto da divisao desse numero pelo tamanho da tabela*/
+int funcaoHash(int numero){
+	return(numero%tamanho);
+}
+
+/*inicializaHash recebe uma como parametro uma variavel do tipo hash
+ * definida em .h,todas as posicoes da tabela se tornam nulas*/
+
+void inicializaHash(Hash tabela){
 	int i;
-	for (i = 0; i < MAX; i++) {
-		tabela_hash[i] = NULL;
+	for(i=0;i<tamanho;i++){
+		tabela[i] = NULL;
 	}
 }
 
-void inserir_numero(int *vetor, int *tabela_hash){
-	int i, j, valor_hash = 0;
-	for (i = 0; i < MAX; i++) {
-		valor_hash = vetor[i] % MAX;
-		if (tabela_hash[valor_hash] == NULL)
-			tabela_hash[valor_hash] = vetor[i];
-		else{
-			for (j = 0; j < MAX; j++){
-				if (tabela_hash[j] == NULL){
-					tabela_hash[j] = vetor[i];
-					break;
-				}
+/*recebe como parametro uma variavel do tipo hash e outro do tipo numero
+ * . Insere os elementos  na tabela atraves da tabela funcao hash e caso
+ * a posicao ja esteja ocupada, como colisao estamos usando encadeamento direto*/
+
+void insereHash(Hash tabela, int numero){
+	int chave = funcaoHash(numero);
+	Dados *aux = tabela[chave];
+	while(aux != NULL){
+		if(aux->informacao == numero){
+			break;
+		}
+		aux = aux->proximo;
+	}
+	if(aux == NULL){
+		aux = (Dados*)malloc(sizeof(Dados));
+		aux->informacao = numero;
+		aux->proximo = tabela[chave];
+		tabela[chave] = aux;
+	}
+}
+
+/*recebe dois parametros, a tabela do tipo hash e um inteiro.
+ * A variavel tabela tem o objetivo passar a tabela e a variavel numero
+ * tem como objetivo determinar  a posicao  da tabela  que o usuario deseja visualizar*/
+void buscaHash(Hash tabela, int numero){
+	int posicao = numero;
+	if(numero > tamanho || numero<0){
+		printf("Posicao nao encontrada");
+		return;
+	}else{
+		imprimeColisao(tabela,posicao);
+	}
+}
+
+/*mostra uma posicao e todas as suas colisoes*/
+void imprimeColisao(Hash tabela,int posicao){
+	Dados* aux = tabela[posicao];
+	if(aux == NULL){
+		printf("posicao vazia");
+		return;
+	}else{
+		if(aux != NULL){
+			printf("%d",aux->informacao);
+			while(aux->proximo != NULL){
+				printf("-> %d", aux->proximo->informacao);
+				aux = aux->proximo;
+			}
+		}
+	}
+
+}
+/* Imprimir todos os elementos da variavel do tipo hash*/
+void imprimeHash(Hash tabela){
+	int i = 0;
+//	int cont = 0;
+
+	for(i=0;i<tamanho;i++){
+		if(tabela[i] != NULL){
+			printf("\n %d",tabela[i]->informacao);
+			Dados* aux = tabela[i]->proximo;
+			while(aux != NULL){
+				printf("-> %d", aux->informacao);
+				aux = aux->proximo;
 			}
 		}
 	}
 }
 
-void imprimir_tabela(int *vetor){
-	int i;
-	printf("Números gerados:\n[");
-	for (i = 0; i < MAX; i++){
-		printf("%d ", vetor[i]);
-	}
-	printf("]\n");
-}
-
-void procurar_valor(int chave_procurada, int *tabela_hash){
-	int i;
-	int posicao = chave_procurada % MAX;
-
-	if (chave_procurada == tabela_hash[posicao]){
-		printf("\nNúmero encontrado");
-		printf("\nPosica %d", posicao);
+/*Criar arquivo que sera usado como recipiente dos numeros aleatorios*/
+void criarArquivo(FILE *arquivo){
+	arquivo = fopen("tabelaHash.txt","r");
+	if(arquivo != NULL){
+		arquivo  = fopen("tabelaHash.txt", "w");
+		fclose(arquivo);
+	}else{
 		return;
 	}
-	else{
-		for (i = posicao + 1; i < MAX; i++){
-			if (chave_procurada == tabela_hash[i]){
-				printf("\nNúmero encontrado");
-				printf("\nPosica %d", posicao);
-				return;
-			}
-		}
-		printf("\nNúmero não encontrado");
+}
+/*Elimina o arquivo criado*/
+void reescreverArquivo(FILE* arquivo){
+	arquivo = fopen("tabelaHash.txt","w");
+	fclose(arquivo);
+}
+
+/*Elementos sao guardados no arquivo*/
+void escreverArquivo(FILE* arquivo, int elemento){
+	arquivo = fopen("tabelaHash.txt", "a");
+	fprintf(arquivo,"%d\n",elemento);
+	fclose(arquivo);
+}
+/*Inserir na tabela hash os elementos do arquivo*/
+int carregarArquivo(Hash tabela){
+
+	int elemento;
+	FILE* arquivo;
+	arquivo = fopen("tabelaHash.txt","r");
+	fseek(arquivo,0,SEEK_END);
+	if(ftell(arquivo) == 0){
+		return 0;
 	}
+	fseek(arquivo,0,SEEK_SET);
+	if(arquivo == NULL){
+		return 0;
+	}else{
+		while(!feof(arquivo)){
+			fscanf(arquivo,"%d",&elemento);
+			insereHash(tabela,elemento);
+		}
+		system("cls");
+	}
+	fclose(arquivo);
+	return 1;
+}
+
+/*O procedimento numeroAleatorio gera 675 numeros no
+ * intervalo 2000 >= X <= 8200 e os armazena no arquivo*/
+void numeroAleatorio(){
+
+	int cont = 0;
+	int numero;
+	FILE* arquivo;
+	srand(time(NULL));
+
+	while(cont != 675){
+		numero = (rand()%6200)+2000;
+		escreverArquivo(arquivo,numero);
+		cont++;
+	}
+}
+
+void lerNumero(int *numero){
+	system("cls");
+	 printf("\nDigite a posicao do elemento que deseja verificar = ");
+	 scanf("%d",numero);
+}
+void lerNumero2(int *numero)
+{
+ system("cls");
+ printf("Digite a posicao que desejar verificar = ");
+ scanf("%d",numero);
+}
+
+void menuHash(int *numero){
+	printf("1 ----  Gerar Numeros Aleatorios\n");
+	printf("2 ----  Inserir os numeros aleatorios\n");
+	printf("3 ----  Buscar Chave\n");
+	printf("4 ----  Imprimir Hash\n");
+	printf("5 ----  Imprimir Colisao\n");
+	printf("6 ----  Sair\n");
+	printf("Digite uma Opcao:");
+	scanf("%d", numero);
 }
 
 int main(void) {
+	Hash tabela;
+	int numero,elemento,op,cont = 0, conti = 0;
+	FILE* arquivo;
 
-	int i;
-	int chave_procurada = 17;
-	int tabela_hash[MAX];
-	int valor_hash = 0;
-	int posicao = 0;
+	 while(numero != 8){
+		menuHash(&numero);
+		switch(numero){
+			case 1:
+				if(cont>0){
+					system("cls");
+					printf("numeros aleatorios ja gerados\n");
+				}else{
+					cont++;
+					inicializaHash(tabela);
+					reescreverArquivo(arquivo);
+					numeroAleatorio();
+				}break;
+			case 2:
+				if(cont>0){
+					conti++;
+					carregarArquivo(tabela);
 
-	int vetor[MAX] = {17, 42, 9, 33, 12};
+				}else{
+					printf("");
+				}break;
+			case 3:
+				if(conti>0){
+					system("cls");
+					lerNumero(&elemento);
+					buscaHash(tabela,elemento);
 
-	iniciar_tabela(tabela_hash);
-	inserir_numero(vetor, tabela_hash);
-	imprimir_tabela(tabela_hash);
-	procurar_valor(chave_procurada, tabela_hash);
-
-	/* Gera número aleatório */
-	/*
-	for (i = 0; i < MAX; i++) {
-		vetor[i] = rand();
+				}else{
+					printf("ddd");
+				}break;
+			case 4:
+				if(conti>0){
+					system("cls");
+					imprimeHash(tabela);
+				}else{
+					printf("dsdsd");
+				}break;
+			case 5:
+				 system("cls");
+				    lerNumero2(&op);
+				    imprimeColisao(tabela,op);
+				    break;
+			case 6:
+				 exit(0);
+			default:
+				 system("cls");
+				 printf("\nOpcao invalida!\n");
+				break;
+		}
 	}
-	*/
 
 	return EXIT_SUCCESS;
 }
+
+
+
