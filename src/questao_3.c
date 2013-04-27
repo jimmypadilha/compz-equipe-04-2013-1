@@ -12,6 +12,7 @@
 #include <stdlib.h>
 
 #define MAX 5
+#define M 7
 
 void iniciar_tabela(int *tabela_hash){
 	int i;
@@ -23,7 +24,7 @@ void iniciar_tabela(int *tabela_hash){
 void inserir_numero(int *vetor, int *tabela_hash){
 	int i, valor_hash = 0;
 	for (i = 0; i < MAX; i++) {
-		valor_hash = vetor[i] % 7;
+		valor_hash = vetor[i] % M;
 		if (valor_hash < MAX){
 			tabela_hash[valor_hash] = vetor[i];
 		}
@@ -42,7 +43,7 @@ void imprimir_tabela(int *vetor){
 
 void procurar_valor(int chave_procurada, int *tabela_hash){
 	int i;
-	int posicao = chave_procurada % 7;
+	int posicao = chave_procurada % M;
 
 	if (chave_procurada == tabela_hash[posicao]){
 		printf("\nNúmero encontrado");
