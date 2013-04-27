@@ -50,18 +50,12 @@ int main(void) {
 	printf("\nP(A)={");
 
 	/* Imprime os numeros sozinhos */
-	for (i = 1; i <= n; i++) {
-		printf("{%d}, ", i);
-	}
+
 
 	/* Imprime os pares de numeros */
-	for (i = 1; i <= n; i++) {
-		for (j = i+1; j <= n; j++) {
-			printf("{%d, %d}, ", i, j);
-		}
-	}
 
-	printf("{");
+
+
 
 	/* Imprime todos os numeros juntos */
 	for (i = 1; i <= n; i++) {
