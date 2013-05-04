@@ -1,7 +1,7 @@
 FLEX = flex
 GCC = gcc
 HASH = valida_email
-EMAIL0=email.txt
+EMAIL=email.txt
 
 .PHONY: clean teste
 
@@ -12,9 +12,11 @@ compile:
 
 clean:
 	@ echo Cleaning...
-	find . -name  *.*~ -print0 | xargs -0 rm -rf
-	find . -name  *~ -print0 | xargs -0 rm -rf
-	@ echo
+	find . -name  *.*~ | xargs -0 rm -rf
+	find . -name  *~ | xargs -0 rm -rf
+	find . -name  *.lex.c -print0 | xargs -0 rm -rf
+	find . -name  *.c -print0 | xargs -0 rm -rf
+	
 
 teste:  
-	@ ./$(HASH) $(EMAIL0)
+	@ ./$(HASH) $(EMAIL)

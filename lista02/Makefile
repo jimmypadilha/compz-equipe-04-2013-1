@@ -12,9 +12,12 @@ compile:
 
 clean:
 	@ echo Cleaning...
-	find . -name  *.*~ -print0 | xargs -0 rm -rf
-	find . -name  *~ -print0 | xargs -0 rm -rf
-	@ echo
+	find . -name  *.*~ | xargs -0 rm -rf
+	find . -name  *~ | xargs -0 rm -rf
+	find . -name  *.lex.c -print0 | xargs -0 rm -rf
+	find . -name  *.c -print0 | xargs -0 rm -rf
+	rm -rf $(HASH)
+	
 
 teste:  
 	@ ./$(HASH) $(EMAIL)
